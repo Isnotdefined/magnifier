@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		#div1{
+			width: 170px;height: 252px;position: relative;
+			margin-left: 500px;
+			border-radius: 4px;border: 2px solid black;
+		}
+		/* #img{
+			display: block;
+		} */
+		#div2{
+			width:110px; height:150px;background: #364732;
+			opacity:0.5;filter:alpha(opacity=50); position:absolute;display:none;
+		}
+		#div3{
+			width: 440px;
+			height: 600px;
+			border: 4px solid black;border-radius: 8px;
+			position: absolute;
+			left: 180px; top: 2px;overflow: hidden;display: none;
+		}
+		#img2{
+			position: absolute;
+		}
+	</style>
+	<script>
+		window.onload=function(){
+			var oDiv1=document.getElementById('div1');
+			var oDiv2=document.getElementById('div2');
+			var oDiv3=document.getElementById('div3');
+			var oImg2=document.getElementById('img2');
+			oDiv1.onmouseenter=function(){
+				oDiv2.style.display='block';
+				oDiv3.style.display='block';
+
+			}
+			oDiv1.onmousemove=function(ev){
+				var e=ev||event;
+				var L=e.clientX-oDiv2.offsetWidth/2-500;
+				var T=e.clientY-oDiv2.offsetHeight/2;
+
+				if(L<0){
+					L=0;
+				}else if (L>oDiv1.offsetWidth-oDiv2.offsetWidth){
+					L=oDiv1.offsetWidth-oDiv2.offsetWidth;
+				}
+				if(T<0){
+					T=0;
+				}else if (T>oDiv1.offsetHeight-oDiv2.offsetHeight){
+					T=oDiv1.offsetHeight-oDiv2.offsetHeight;
+				}
+
+				var scaleX=L/(oDiv1.offsetWidth-oDiv2.offsetWidth);
+				oImg2.style.left=(oDiv3.clientWidth-oImg2.offsetWidth)*scaleX+'px';   //offsetWidth 与clientWidth 区别
+				var scaleY=T/(oDiv1.offsetHeight-oDiv2.offsetHeight);
+				oImg2.style.top=(oDiv3.clientHeight-oImg2.offsetHeight)*scaleY+'px';
+				oDiv2.style.left=L+'px';
+				oDiv2.style.top=T+'px';
+			}
+			oDiv1.onmouseleave=function(){
+				oDiv2.style.display='none';
+				oDiv3.style.display='none';
+			}	
+		}
+		
+	</script>
+</head>
+<body>
+	<div id="div1">
+		<img src="2.jpg" id="img1" alt="">
+		<div id="div2"></div>
+		<div id="div3"><img src="1.jpg" id="img2" alt=""></div>
+	</div>
+</body>
+</html>
